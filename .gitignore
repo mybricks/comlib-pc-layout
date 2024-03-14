@@ -1,0 +1,15 @@
+.git/
+.idea/
+lib/
+.DS_Store
+node_modules
+tags/*
+.history
+.vscode/
+coverage
+.npmrc
+yarn.lock
+package-lock.json
+.temp/
+.temp-pub/
+.temp-pub-items/

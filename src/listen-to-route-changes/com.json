@@ -1,0 +1,24 @@
+{
+  "title": "路由监听",
+  "namespace": "mybricks.normal-pc.listen-to-route-change",
+  "version": "1.0.0",
+  "rtType": "js-autorun",
+  "description": "路由监听",
+  "author": "jidan.wd",
+  "author_name": "jidan.wd",
+  "docs": "",
+  "icon": "./icon.svg",
+  "data": "./data.json",
+  "runtime": "./runtime.ts",
+  "editors": "./editor.ts",
+  "outputs": [
+    {
+      "id": "route",
+      "title": "路由",
+      "schema": {
+        "type": "string"
+      },
+      "editable": true
+    }
+  ]
+}

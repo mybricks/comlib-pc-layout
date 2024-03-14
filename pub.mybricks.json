@@ -1,0 +1,11 @@
+{
+  "commitInfo": "update",
+  "namespace": "mybricks.pc-layout",
+  "componentType": "PC",
+  "content": "",
+  "debugger": "pc-spa",
+  "comAry": {
+    "publish": ["./src/listen-to-route-changes/com.json"]
+  },
+  "tags": "react"
+}
