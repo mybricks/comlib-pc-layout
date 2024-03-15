@@ -1,6 +1,6 @@
 {
   "title": "路由监听",
-  "namespace": "mybricks.normal-pc.listen-to-route-change",
+  "namespace": "mybricks.layout-pc.listen-to-route-change",
   "version": "1.0.0",
   "rtType": "js-autorun",
   "description": "路由监听",

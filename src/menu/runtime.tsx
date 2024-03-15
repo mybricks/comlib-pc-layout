@@ -17,53 +17,53 @@ type HandleRouteDataNode = RouteParam & {
   parentNode?: HandleRouteDataNode;
 };
 
-window['layoutPC__routerParams'] = [
-  {
-    _id: '3DFF6U',
-    id: '26fgfa52ogw',
-    menuTitle: 'menu1',
-    route: '/menu1',
-    pageId: 'u_SZecd'
-  },
-  {
-    _id: 'q9Ys8z',
-    id: '4helcpvdstg',
-    menuTitle: 'menu2',
-    route: '/menu2',
-    pageId: 'u_SZecd'
-  },
-  {
-    _id: 'AoKevu',
-    id: 's0modfupe0',
-    menuTitle: 'menu3',
-    route: '/menu3',
-    pageId: 'u_SZecd'
-  },
-  {
-    _id: 'GvfwzI',
-    id: '11a6bej4rxg.i',
-    menuTitle: 'sub-menu1',
-    route: '/menu1/sub-menu1',
-    pageId: 'u_0H5Ua',
-    parentId: '26fgfa52ogw'
-  },
-  {
-    _id: 'GY2bwB',
-    id: '3ahulp2c2fe',
-    menuTitle: 'sub-menu2',
-    route: '/menu1/sub-menu2',
-    pageId: 'u_0H5Ua',
-    parentId: '26fgfa52ogw'
-  },
-  {
-    _id: 'CVrKbp',
-    id: '1cqcpfj3x0l',
-    route: '/menu1/sub-menu2/sub-sub1',
-    menuTitle: 'subsub1',
-    pageId: 'u_0H5Ua',
-    parentId: '11a6bej4rxg.i'
-  }
-];
+// window['layoutPC__routerParams'] = [
+//   {
+//     _id: '3DFF6U',
+//     id: '26fgfa52ogw',
+//     menuTitle: 'menu1',
+//     route: '/menu1',
+//     pageId: 'u_SZecd'
+//   },
+//   {
+//     _id: 'q9Ys8z',
+//     id: '4helcpvdstg',
+//     menuTitle: 'menu2',
+//     route: '/menu2',
+//     pageId: 'u_SZecd'
+//   },
+//   {
+//     _id: 'AoKevu',
+//     id: 's0modfupe0',
+//     menuTitle: 'menu3',
+//     route: '/menu3',
+//     pageId: 'u_SZecd'
+//   },
+//   {
+//     _id: 'GvfwzI',
+//     id: '11a6bej4rxg.i',
+//     menuTitle: 'sub-menu1',
+//     route: '/menu1/sub-menu1',
+//     pageId: 'u_0H5Ua',
+//     parentId: '26fgfa52ogw'
+//   },
+//   {
+//     _id: 'GY2bwB',
+//     id: '3ahulp2c2fe',
+//     menuTitle: 'sub-menu2',
+//     route: '/menu1/sub-menu2',
+//     pageId: 'u_0H5Ua',
+//     parentId: '26fgfa52ogw'
+//   },
+//   {
+//     _id: 'CVrKbp',
+//     id: '1cqcpfj3x0l',
+//     route: '/menu1/sub-menu2/sub-sub1',
+//     menuTitle: 'subsub1',
+//     pageId: 'u_0H5Ua',
+//     parentId: '11a6bej4rxg.i'
+//   }
+// ];
 
 function transToItems(data: HandleRouteDataNode[]) {
   return (
