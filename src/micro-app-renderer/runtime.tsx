@@ -68,7 +68,7 @@ export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Da
   /** 监听路由变化， */
   useLayoutEffect(() => {
     const onPopState = () => {
-      let node = window['layoutPC__routerParams']?.find((item) => item.route === location.pathname);
+      const node = window?.['layoutPC__routerParams']?.find((item) => item.route === location.pathname);
       data.pageUrl = node?.pageUrl
     };
     onPopState();
