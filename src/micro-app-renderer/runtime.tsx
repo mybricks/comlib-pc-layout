@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import _debounce from 'lodash/debounce';
 import { Data, SimpleMicroApp, LoadableApp } from './types';
 import { Spin } from 'antd';
@@ -65,10 +65,17 @@ class AppManager {
 const appManager = new AppManager();
 
 export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Data>) {
-  useEffect(() => {
-    inputs['pageUrl']((val: string) => {
-      data.pageUrl = val;
-    });
+  /** 监听路由变化， */
+  useLayoutEffect(() => {
+    const onPopState = () => {
+      let node = window['layoutPC__routerParams']?.find((item) => item.route === location.pathname);
+      data.pageUrl = node?.pageUrl
+    };
+    onPopState();
+    window.addEventListener('popstate', onPopState);
+    return () => {
+      window.removeEventListener('popstate', onPopState);
+    };
   }, []);
 
   const eleRef = useRef<HTMLDivElement>(null);
