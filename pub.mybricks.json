@@ -5,7 +5,11 @@
   "content": "",
   "debugger": "pc-spa",
   "comAry": {
-    "publish": ["./src/listen-to-route-changes/com.json", "./src/menu/com.json"]
+    "publish": [
+      "./src/listen-to-route-changes/com.json",
+      "./src/menu/com.json",
+      "./src/micro-app-renderer/com.json"
+    ]
   },
   "tags": "react"
 }
