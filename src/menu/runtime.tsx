@@ -27,6 +27,7 @@ function transToItems(data: HandleRouteDataNode[]) {
         onClick: () => {
           if (node.children) return;
           const completeRoute = window['layoutPC__basePathname'] + node.route;
+          console.log(`completeRoute JD==> `,completeRoute);
           history.pushState({}, '', completeRoute);
           window.dispatchEvent(new PopStateEvent('popstate'));
         }
@@ -37,7 +38,7 @@ function transToItems(data: HandleRouteDataNode[]) {
 
 export default function ({ env, data, outputs, inputs }: RuntimeParams<Data>) {
   if (!env.runtime || env.runtime.debug) {
-    window['layoutPC__basePathname'] = "basePathname"
+    window['layoutPC__basePathname'] = ""
     window['layoutPC__routerParams'] = mockRouterParams;
   }
 

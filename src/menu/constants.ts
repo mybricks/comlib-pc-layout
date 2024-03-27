@@ -10,6 +10,38 @@ export interface Data {
 
 export const mockRouterParams = [
   {
+    "_id": "Bm1RZE",
+    "id": "3cwh8nmh6nw",
+    "menuTitle": "可编辑表格测试",
+    "route": "/menu1x",
+    "pageId": "u_SZecd",
+    "pageUrl": "https://fangzhou.kwaixiaodian.com/pcspa/CpWuyLVXqBeO/zYsXsrUxvBqk?layoutType=4&hyId=zYsXsrUxvBqk"
+  },
+  {
+    "_id": "xZ4Eeh",
+    "id": "1oshzpxmfey",
+    "menuTitle": "树选择侧边栏demo",
+    "pageUrl": "https://fangzhou.kwaixiaodian.com/pcspa/XKUFzHeNpDql/cIcWXRNuUKsE",
+    "route": "/menu2x",
+    "pageId": "u_SZecd"
+  },
+  {
+    "_id": "ymBD9F",
+    "id": "1qx0tf3sj4s",
+    "pageUrl": "https://fangzhou.kwaixiaodian.com/pcspa/IbiJTDUZJplk/JegQKQOJLDWI?layoutType=4&hyId=JegQKQOJLDWI",
+    "pageId": "u_SZecd",
+    "route": "/menu3x",
+    "menuTitle": "测试用子页面"
+  },
+  {
+    "_id": "IddJiN",
+    "id": "4mo2rkq9mew",
+    "menuTitle": "来自test的页面",
+    "route": "/menu4x",
+    "pageId": "u_SZecd",
+    "pageUrl": "https://test.mybricks.world/mfs/app/pcpage/test/545808963625029.html"
+  },
+  {
     "_id": "3DFF6U",
     "id": "26fgfa52ogw",
     "menuTitle": "menu1",
