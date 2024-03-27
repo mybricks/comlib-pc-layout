@@ -67,12 +67,15 @@ class AppManager {
 const appManager = new AppManager();
 
 export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Data>) {
+  if (!env.runtime || env.runtime.debug) {
+    window['layoutPC__basePathname'] = ""
+  }
   console.log(`init window JD==> `,window);
 
   /** 监听路由变化， */
   useLayoutEffect(() => {
     const onPopState = () => {
-      const node = window?.['layoutPC__routerParams']?.find((item) => item.route === location.pathname);
+      const node = window?.['layoutPC__routerParams']?.find((item) => window['layoutPC__basePathname'] + item.route === location.pathname);
       data.pageUrl = node?.pageUrl
     };
     onPopState();
