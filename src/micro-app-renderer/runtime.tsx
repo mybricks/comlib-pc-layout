@@ -46,9 +46,7 @@ class AppManager {
 
   switchInvalidApp = async ({ container }: { container: HTMLElement }) => {
     await appManager.unmountCurApp();
-    console.log(`before window JD==> `,window);
     this.curLoadedMicroApp = loadInvalidApp({ container });
-    console.log(`after window JD==> `,window);
     return Promise.resolve();
   };
 
@@ -67,7 +65,6 @@ class AppManager {
 const appManager = new AppManager();
 
 export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Data>) {
-  console.log(`init window JD==> `,window);
 
   /** 监听路由变化， */
   useLayoutEffect(() => {
@@ -87,8 +84,6 @@ export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Da
 
   useEffect(() => {
     if (!eleRef.current) return;
-    // @ts-expect-error 用于兼容解决内网方舟页面 m-ui 挂载逻辑
-    window.antd = undefined;
     if (!data.pageUrl) {
       console.warn('[micro app] invalid app,url is required');
       appManager.switchInvalidApp({ container: eleRef.current });
