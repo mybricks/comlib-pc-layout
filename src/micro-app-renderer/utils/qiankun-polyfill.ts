@@ -136,17 +136,11 @@ const openIframeMode = () => {
 export const loadApp = ({ name, entry, container }: LoadableApp) => {
   if (openIframeMode()) {
     return mockMainApp.loadApp({ entry, container });
-  } else {
-    // 用于兼容解决内网方舟页面 m-ui 挂载逻辑
-    const _antd = window.antd;
-    delete window.antd;
-    const microApp = qiankun.loadMicroApp(
-      { name, entry, container },
-      { sandbox: { experimentalStyleIsolation: true }, singular: false }
-    );
-    window.antd = _antd;
-    return microApp;
   }
+  return qiankun.loadMicroApp(
+    { name, entry, container },
+    { sandbox: { experimentalStyleIsolation: true }, singular: false }
+  );
 };
 
 export const loadInvalidApp = ({ container }: { container: HTMLElement }) => {
