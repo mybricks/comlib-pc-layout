@@ -93,8 +93,8 @@ export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Da
     } else {
       setLoading(true);
       // 用于兼容解决内网方舟页面 m-ui 挂载逻辑
-      const _antd = window.antd;
-      delete window.antd;
+      // const _antd = window.antd;
+      // delete window.antd;
       appManager
         .switchApp({ name: data.pageUrl, entry: data.pageUrl, container: eleRef.current })
         .catch((err) => {
@@ -107,7 +107,7 @@ export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Da
               data.pageUrl === appManager.curApp.name &&
               appManager.curApp.getStatus() === 'MOUNTED'
             ) {
-              window.antd = _antd;
+              // window.antd = _antd;
               timer && clearInterval(timer);
               timer = null;
               setLoading(false);
