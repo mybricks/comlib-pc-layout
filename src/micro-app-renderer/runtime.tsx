@@ -65,9 +65,9 @@ class AppManager {
 const appManager = new AppManager();
 
 export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Data>) {
-  if (!env.runtime || env.runtime.debug) {
-    window['layoutPC__basePathname'] = ""
-  }
+  // if (!env.runtime || env.runtime.debug) {
+  //   window['layoutPC__basePathname'] = ""
+  // }
 
   /** 监听路由变化， */
   useLayoutEffect(() => {
