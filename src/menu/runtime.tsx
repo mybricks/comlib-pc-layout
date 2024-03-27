@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useMemo, useState } from 'react';
 import { Menu } from 'antd';
-import { Data } from './constants';
+import { Data, mockRouterParams } from './constants';
 
 type RouteParam = {
   id: string;
@@ -17,54 +17,6 @@ type HandleRouteDataNode = RouteParam & {
   parentNode?: HandleRouteDataNode;
 };
 
-// window['layoutPC__routerParams'] = [
-//   {
-//     _id: '3DFF6U',
-//     id: '26fgfa52ogw',
-//     menuTitle: 'menu1',
-//     route: '/menu1',
-//     pageId: 'u_SZecd'
-//   },
-//   {
-//     _id: 'q9Ys8z',
-//     id: '4helcpvdstg',
-//     menuTitle: 'menu2',
-//     route: '/menu2',
-//     pageId: 'u_SZecd'
-//   },
-//   {
-//     _id: 'AoKevu',
-//     id: 's0modfupe0',
-//     menuTitle: 'menu3',
-//     route: '/menu3',
-//     pageId: 'u_SZecd'
-//   },
-//   {
-//     _id: 'GvfwzI',
-//     id: '11a6bej4rxg.i',
-//     menuTitle: 'sub-menu1',
-//     route: '/menu1/sub-menu1',
-//     pageId: 'u_0H5Ua',
-//     parentId: '26fgfa52ogw'
-//   },
-//   {
-//     _id: 'GY2bwB',
-//     id: '3ahulp2c2fe',
-//     menuTitle: 'sub-menu2',
-//     route: '/menu1/sub-menu2',
-//     pageId: 'u_0H5Ua',
-//     parentId: '26fgfa52ogw'
-//   },
-//   {
-//     _id: 'CVrKbp',
-//     id: '1cqcpfj3x0l',
-//     route: '/menu1/sub-menu2/sub-sub1',
-//     menuTitle: 'subsub1',
-//     pageId: 'u_0H5Ua',
-//     parentId: '11a6bej4rxg.i'
-//   }
-// ];
-
 function transToItems(data: HandleRouteDataNode[]) {
   return (
     data?.map((node) => {
@@ -74,7 +26,8 @@ function transToItems(data: HandleRouteDataNode[]) {
         children: node.children && transToItems(node.children),
         onClick: () => {
           if (node.children) return;
-          history.pushState({}, '', node.route);
+          const completeRoute = window['layoutPC__basePathname'] + node.route;
+          history.pushState({}, '', completeRoute);
           window.dispatchEvent(new PopStateEvent('popstate'));
         }
       };
@@ -83,8 +36,12 @@ function transToItems(data: HandleRouteDataNode[]) {
 }
 
 export default function ({ env, data, outputs, inputs }: RuntimeParams<Data>) {
-  const [routerParams, setRouterParams] = useState<RouteParams>(window['layoutPC__routerParams']);
+  if (!env.runtime || env.runtime.debug) {
+    window['layoutPC__basePathname'] = "basePathname"
+    window['layoutPC__routerParams'] = mockRouterParams;
+  }
 
+  const [routerParams, setRouterParams] = useState<RouteParams>(window['layoutPC__routerParams']);
   const [showNodes, setShowNodes] = useState<HandleRouteDataNode[]>();
   const [curActiveNode, setCurActiveNode] = useState<HandleRouteDataNode>();
 
@@ -97,6 +54,7 @@ export default function ({ env, data, outputs, inputs }: RuntimeParams<Data>) {
   /** 监听路由变化， */
   useLayoutEffect(() => {
     const onPopState = () => {
+      if (!flatData) return;
       let node = flatData.find((item) => item.route === location.pathname);
       setCurActiveNode(node);
       while (node && node.dep >= data.menuLevel) node = node.parentNode;
@@ -111,7 +69,7 @@ export default function ({ env, data, outputs, inputs }: RuntimeParams<Data>) {
 
   /** 树形数据预处理 */
   const { nestedData, flatData } = useMemo(() => {
-    const flatData: HandleRouteDataNode[] = routerParams.map((item) => ({ ...item, dep: -1 }));
+    const flatData: HandleRouteDataNode[] = (routerParams || []).map((item) => ({ ...item, dep: -1 }));
 
     const map = {};
     const nestedData = [];
