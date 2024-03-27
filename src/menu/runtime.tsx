@@ -37,10 +37,10 @@ function transToItems(data: HandleRouteDataNode[]) {
 }
 
 export default function ({ env, data, outputs, inputs }: RuntimeParams<Data>) {
-  if (!env.runtime || env.runtime.debug) {
-    window['layoutPC__basePathname'] = ""
-    window['layoutPC__routerParams'] = mockRouterParams;
-  }
+  // if (!env.runtime || env.runtime.debug) {
+  //   window['layoutPC__basePathname'] = ""
+  //   window['layoutPC__routerParams'] = mockRouterParams;
+  // }
 
   const [routerParams, setRouterParams] = useState<RouteParams>(window['layoutPC__routerParams']);
   const [showNodes, setShowNodes] = useState<HandleRouteDataNode[]>();
