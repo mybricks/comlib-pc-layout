@@ -2,6 +2,7 @@ import * as qiankun from 'qiankun';
 import { SimpleMicroApp, LoadableApp } from '../types';
 
 class MainApp {
+
   cacheHtmlMap = {};
 
   loadApp = ({ entry, container }: { entry: string; container: HTMLElement }): SimpleMicroApp => {
@@ -137,10 +138,7 @@ export const loadApp = ({ name, entry, container }: LoadableApp) => {
   if (openIframeMode()) {
     return mockMainApp.loadApp({ entry, container });
   }
-  return qiankun.loadMicroApp(
-    { name, entry, container },
-    { sandbox: { experimentalStyleIsolation: true }, singular: false }
-  );
+  return qiankun.loadMicroApp({ name, entry, container }, { sandbox: { experimentalStyleIsolation: true }, singular: false });
 };
 
 export const loadInvalidApp = ({ container }: { container: HTMLElement }) => {

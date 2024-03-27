@@ -87,14 +87,13 @@ export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Da
 
   useEffect(() => {
     if (!eleRef.current) return;
+    // @ts-expect-error 用于兼容解决内网方舟页面 m-ui 挂载逻辑
+    window.antd = undefined;
     if (!data.pageUrl) {
       console.warn('[micro app] invalid app,url is required');
       appManager.switchInvalidApp({ container: eleRef.current });
     } else {
       setLoading(true);
-      // 用于兼容解决内网方舟页面 m-ui 挂载逻辑
-      // const _antd = window.antd;
-      // delete window.antd;
       appManager
         .switchApp({ name: data.pageUrl, entry: data.pageUrl, container: eleRef.current })
         .catch((err) => {
@@ -107,7 +106,6 @@ export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Da
               data.pageUrl === appManager.curApp.name &&
               appManager.curApp.getStatus() === 'MOUNTED'
             ) {
-              // window.antd = _antd;
               timer && clearInterval(timer);
               timer = null;
               setLoading(false);
