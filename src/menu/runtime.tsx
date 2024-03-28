@@ -27,7 +27,6 @@ function transToItems(data: HandleRouteDataNode[]) {
         onClick: () => {
           if (node.children) return;
           const completeRoute = window['layoutPC__basePathname'] + node.route;
-          console.log(`completeRoute JD==> `,completeRoute);
           history.pushState({}, '', completeRoute);
           window.dispatchEvent(new PopStateEvent('popstate'));
         }
@@ -56,7 +55,7 @@ export default function ({ env, data, outputs, inputs }: RuntimeParams<Data>) {
   useLayoutEffect(() => {
     const onPopState = () => {
       if (!flatData) return;
-      let node = flatData.find((item) => item.route === location.pathname);
+      let node = flatData.find((item) => window['layoutPC__basePathname'] + item.route === location.pathname);
       setCurActiveNode(node);
       while (node && node.dep >= data.menuLevel) node = node.parentNode;
       setShowNodes(node?.children || []);
