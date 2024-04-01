@@ -1,62 +1,68 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import _debounce from 'lodash/debounce';
 import { Data, SimpleMicroApp, LoadableApp } from './types';
-import { Spin } from 'antd';
 import styles from './style.less';
 import { loadApp, loadInvalidApp } from './utils/qiankun-polyfill';
+import { prefetchApps } from 'qiankun';
+import { Spin } from 'antd';
 
 class AppManager {
-  private curLoadedMicroApp: SimpleMicroApp | null = null;
-  private curLoadableMicroApp: LoadableApp | null = null;
-  private loadedMicroAppMap: { [keyName: string]: SimpleMicroApp } = {};
+  private microApps: { curApp: any; appMap: { [keyName: string]: any } } = {
+    curApp: null as any as any,
+    appMap: {}
+  };
 
-  private _switch = _debounce(async (loadableMicroApp: LoadableApp) => {
+  private _switch = _debounce(async (nextApp) => {
     await this.unmountCurApp();
-    this.curLoadableMicroApp = loadableMicroApp;
-    if (!!this.loadedMicroAppMap[loadableMicroApp.name]) {
-      await this.loadedMicroAppMap[loadableMicroApp.name].mount();
-      this.curLoadedMicroApp = this.loadedMicroAppMap[loadableMicroApp.name];
+    if (!!this.microApps.appMap[nextApp.name]) {
+      await this.microApps.appMap[nextApp.name].mount();
+      // @ts-ignore
+      this.nextApp = nextApp;
+      this.microApps.curApp = this.microApps.appMap[nextApp.name];
       return Promise.resolve();
-    } else if (!!!this.loadedMicroAppMap[loadableMicroApp.name]) {
-      this.curLoadedMicroApp = loadApp(loadableMicroApp);
-      this.loadedMicroAppMap[loadableMicroApp.name] = this.curLoadedMicroApp;
-      return this.curApp?.mountPromise;
+    } else if (!!!this.microApps.appMap[nextApp.name]) {
+      // @ts-ignore
+      this.nextApp = nextApp;
+      this.microApps.curApp = loadApp(nextApp);
+      return this.microApps.curApp?.mountPromise;
     }
     return Promise.resolve();
   }, 300);
 
   unmountCurApp = async () => {
-    if (!this.curApp) {
+    if (!this.microApps?.curApp) {
       return Promise.resolve();
     }
 
-    if (this.curApp.getStatus() !== 'MOUNTED') {
+    if (this.microApps?.curApp.getStatus?.() !== 'MOUNTED') {
       return Promise.resolve();
     }
 
-    return this.curApp.unmount();
+    return this.microApps.curApp?.unmount?.();
   };
 
-  switchApp = async (loadableMicroApp: LoadableApp) => {
-    if (this.curApp?.name === loadableMicroApp.name) {
+  switchApp = async (nextApp) => {
+    if (this.microApps?.curApp?.name === nextApp.name) {
       return Promise.resolve();
     }
-    return this._switch(loadableMicroApp);
+
+    return this._switch(nextApp);
   };
 
-  switchInvalidApp = async ({ container }: { container: HTMLElement }) => {
-    await appManager.unmountCurApp();
-    this.curLoadedMicroApp = loadInvalidApp({ container });
+  switchInvalidApp = async ({ container }) => {
+    await appManager.unmountCurApp?.();
+    this.microApps.curApp = loadInvalidApp?.({ container });
     return Promise.resolve();
   };
 
   get curApp() {
-    const curApp = this.curLoadedMicroApp;
+    const curApp = this.microApps.curApp;
 
     return (
       curApp && {
         ...curApp,
-        name: this.curLoadableMicroApp?.name
+        // @ts-ignore
+        name: this.nextApp?.name
       }
     );
   }
@@ -69,11 +75,23 @@ export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Da
   //   window['layoutPC__basePathname'] = ""
   // }
 
+  useEffect(() => {
+    if (env.runtime) {
+      const apps = window?.['layoutPC__routerParams']?.map((item) => ({
+        name: item.pageUrl,
+        entry: item.pageUrl
+      }));
+      apps?.length && prefetchApps(apps);
+    }
+  }, []);
+
   /** 监听路由变化， */
   useLayoutEffect(() => {
     const onPopState = () => {
-      const node = window?.['layoutPC__routerParams']?.find((item) => window['layoutPC__basePathname'] + item.route === location.pathname);
-      data.pageUrl = node?.pageUrl
+      const node = window?.['layoutPC__routerParams']?.find(
+        (item) => window['layoutPC__basePathname'] + item.route === location.pathname
+      );
+      data.pageUrl = node?.pageUrl;
     };
     onPopState();
     window.addEventListener('popstate', onPopState);
@@ -83,7 +101,7 @@ export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Da
   }, []);
 
   const eleRef = useRef<HTMLDivElement>(null);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!eleRef.current) return;
@@ -91,10 +109,10 @@ export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Da
       console.warn('[micro app] invalid app,url is required');
       appManager.switchInvalidApp({ container: eleRef.current });
     } else {
-      setLoading(true);
+      // setLoading(true);
       // @ts-expect-error 用于兼容解决内网方舟页面 m-ui 挂载逻辑
-      const _antd = window.antd
-      // @ts-expect-error 
+      const _antd = window.antd;
+      // @ts-expect-error
       delete window.antd;
       appManager
         .switchApp({ name: data.pageUrl, entry: data.pageUrl, container: eleRef.current })
@@ -108,11 +126,11 @@ export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Da
               data.pageUrl === appManager.curApp.name &&
               appManager.curApp.getStatus() === 'MOUNTED'
             ) {
-              // @ts-expect-error 
+              // @ts-expect-error
               window.antd = _antd;
               timer && clearInterval(timer);
               timer = null;
-              setLoading(false);
+              // setLoading(false);
             }
           }, 100);
         });
@@ -121,13 +139,11 @@ export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Da
 
   return (
     <div className={styles.pageRender}>
-      <Spin spinning={loading} tip='加载中...'>
-        {env.edit ? (
-          <div className={styles.tip}>这里是页面渲染区域</div>
-        ) : (
-          <div className={styles.rtMountNode} ref={eleRef} />
-        )}
-      </Spin>
+      {env.edit ? (
+        <div className={styles.tip}>这里是页面渲染区域</div>
+      ) : (
+        <div className={styles.rtMountNode} ref={eleRef} />
+      )}
     </div>
   );
 }
