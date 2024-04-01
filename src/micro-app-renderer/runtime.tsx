@@ -142,7 +142,7 @@ export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Da
   }, [data.pageUrl]);
 
   return (
-    <div className={styles.pageRender}>
+    <div className={styles.pageRender} style={{backgroundColor: !data.pageUrl || loading || env.edit ? '#f6f8fc':''}}>
       <Spin spinning={loading} tip='加载中...'>
         {env.edit ? (
           <div className={styles.tip}>这里是页面渲染区域</div>
