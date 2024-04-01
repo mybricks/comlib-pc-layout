@@ -138,7 +138,7 @@ export const loadApp = ({ name, entry, container }: LoadableApp) => {
   if (openIframeMode()) {
     return mockMainApp.loadApp({ entry, container });
   }
-  return qiankun.loadMicroApp({ name, entry, container }, { sandbox: { experimentalStyleIsolation: true }, singular: false });
+  return qiankun.loadMicroApp({ name, entry, container }, { sandbox: { experimentalStyleIsolation: true }, singular: true });
 };
 
 export const loadInvalidApp = ({ container }: { container: HTMLElement }) => {
