@@ -103,14 +103,15 @@ export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Da
   }, []);
 
   const eleRef = useRef<HTMLDivElement>(null);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    let _antd;
-    // const app = dynamicApps.find((app) => app.activeRule === pathname);
+    let _antd, __comlibs_rt_;
+    // @ts-expect-error
+    delete window.antd;
     let currentApp: MicroApp;
     if (data.pageUrl && eleRef.current) {
-      setLoading(true);
+      // setLoading(true);
       currentApp = loadMicroApp(
         { name: data.pageUrl, entry: data.pageUrl, container: eleRef.current },
         {
@@ -125,12 +126,18 @@ export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Da
             _antd = window.antd;
             // @ts-expect-error
             delete window.antd;
+            // @ts-expect-error
+            __comlibs_rt_ = window.__comlibs_rt_
+            // @ts-expect-error
+            delete window.__comlibs_rt_;
             return Promise.resolve();
           },
           afterMount() {
-            setLoading(false);
+            // setLoading(false);
             // @ts-expect-error
             window.antd = _antd;
+            // @ts-expect-error
+            window.__comlibs_rt_= __comlibs_rt_;
             return Promise.resolve();
           }
         }
@@ -142,14 +149,15 @@ export default function ({ data, inputs, outputs, slots, env }: RuntimeParams<Da
   }, [data.pageUrl]);
 
   return (
-    <div className={styles.pageRender} style={{backgroundColor: !data.pageUrl || loading || env.edit ? '#f6f8fc':''}}>
-      <Spin spinning={loading} tip='加载中...'>
+    // <div className={styles.pageRender} style={{backgroundColor: !data.pageUrl || loading || env.edit ? '#f6f8fc':''}}>
+    <div className={styles.pageRender} style={{backgroundColor: !data.pageUrl || env.edit ? '#f6f8fc':''}}>
+      {/* <Spin spinning={loading} tip='加载中...'> */}
         {env.edit ? (
           <div className={styles.tip}>这里是页面渲染区域</div>
         ) : (
           <div className={styles.rtMountNode} ref={eleRef} />
         )}
-      </Spin>
+      {/* </Spin> */}
     </div>
   );
 }
