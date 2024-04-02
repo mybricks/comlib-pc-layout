@@ -20,7 +20,7 @@
   "dependencies": {
     "@ant-design/icons": "4.7.0",
     "antd": "4.21.6",
-    "qiankun": "^2.10.16"
+    "qiankun": "^2.10.13"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
