@@ -4,6 +4,7 @@ import { Data } from './types';
 import styles from './style.less';
 import { MicroApp, loadMicroApp } from 'qiankun';
 import { Spin } from 'antd';
+import dfs from '../utils/dfs';
 export default function ({ env }: RuntimeParams<Data>) {
   const eleRef = useRef<HTMLDivElement>(null);
   const [pageUrl, setPageUrl] = useState<string>();
@@ -49,8 +50,10 @@ export default function ({ env }: RuntimeParams<Data>) {
   /** 监听路由变化， */
   useLayoutEffect(() => {
     const onPopState = () => {
-      const node = window?.['layoutPC__routerParams']?.find(
-        (item) => window['layoutPC__basePathname'] + item.route === location.pathname
+      const node = dfs(
+        window['layoutPC__routerParams'],
+        'route',
+        location.pathname.substring(window['layoutPC__basePathname']?.length)
       );
       setPageUrl(node?.pageUrl);
     };

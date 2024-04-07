@@ -1,10 +1,11 @@
 import React, { useLayoutEffect, useMemo, useState } from 'react';
 import { Menu } from 'antd';
 import { Data, mockRouterParams } from './constants';
+import dfs from '../utils/dfs';
 
 type RouteParam = {
   id: string;
-  menuTitle: string;
+  title: string;
   route: string;
   pageId: string;
   parentId?: string;
@@ -22,7 +23,7 @@ function transToItems(data: HandleRouteDataNode[]) {
     data?.map((node) => {
       return {
         key: node.id,
-        label: node.menuTitle,
+        label: node.title,
         children: node.children && transToItems(node.children),
         onClick: () => {
           if (node.children) return;
@@ -51,44 +52,10 @@ export default function ({ env, data, outputs, inputs }: RuntimeParams<Data>) {
     window['layoutPC__onRouterParamsChange'].push(setRouterParams);
   }, []);
 
-  /** 监听路由变化， */
-  useLayoutEffect(() => {
-    const onPopState = () => {
-      if (!flatData) return;
-      let node = flatData.find((item) => window['layoutPC__basePathname'] + item.route === location.pathname);
-      setCurActiveNode(node);
-      while (node && node.dep >= data.menuLevel) node = node.parentNode;
-      setShowNodes(node?.children || []);
-    };
-    onPopState();
-    window.addEventListener('popstate', onPopState);
-    return () => {
-      window.removeEventListener('popstate', onPopState);
-    };
-  }, []);
-
   /** 树形数据预处理 */
-  const { nestedData, flatData } = useMemo(() => {
-    const flatData: HandleRouteDataNode[] = (routerParams || []).map((item) => ({ ...item, dep: -1 }));
-
-    const map = {};
-    const nestedData = [];
-
-    // 构建一个以id为键的映射对象
-    flatData.forEach((node) => {
-      map[node.id] = node;
-    });
-
-    // 构建嵌套结构
-    flatData.forEach((node) => {
-      if (!node.parentId) nestedData.push(map[node.id]);
-
-      const parent = map[node.parentId];
-      if (parent) {
-        if (!parent.children) parent.children = [];
-        parent.children.push(map[node.id]);
-      }
-    });
+  const { nestedData } = useMemo(() => {
+    // @ts-ignore
+    const nestedData: HandleRouteDataNode[] = JSON.parse(JSON.stringify(routerParams)) || []
 
     function dfs(nodes: HandleRouteDataNode[], dep = 1, parentNode?: HandleRouteDataNode) {
       nodes.forEach((node) => {
@@ -99,8 +66,28 @@ export default function ({ env, data, outputs, inputs }: RuntimeParams<Data>) {
     }
     dfs(nestedData);
 
-    return { nestedData, flatData };
+    return { nestedData };
   }, [routerParams]);
+
+  /** 监听路由变化， */
+  useLayoutEffect(() => {
+    const onPopState = () => {
+      if (!nestedData) return;
+      let node = dfs(
+        nestedData,
+        'route',
+        location.pathname.substring(window['layoutPC__basePathname']?.length)
+      );
+      setCurActiveNode(node);
+      while (node && node.dep >= data.menuLevel) node = node.parentNode;
+      setShowNodes(node?.children || []);
+    };
+    onPopState();
+    window.addEventListener('popstate', onPopState);
+    return () => {
+      window.removeEventListener('popstate', onPopState);
+    };
+  }, []);
 
   /** 菜单展示数据 */
   const items = useMemo(() => {
