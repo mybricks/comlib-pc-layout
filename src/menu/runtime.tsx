@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useMemo, useState } from 'react';
-import { Menu } from 'antd';
+import { Menu, message } from 'antd';
 import { Data, mockRouterParams } from './constants';
 import dfs from '../utils/dfs';
 
@@ -18,15 +18,19 @@ type HandleRouteDataNode = RouteParam & {
   parentNode?: HandleRouteDataNode;
 };
 
-function transToItems(data: HandleRouteDataNode[]) {
+function transToItems(data: HandleRouteDataNode[], canNotPushState: boolean = false) {
   return (
     data?.map((node) => {
       return {
         key: node.id,
         label: node.title,
-        children: node.children && transToItems(node.children),
+        children: node.children && transToItems(node.children, canNotPushState),
         onClick: () => {
           if (node.children) return;
+          if (canNotPushState) {
+            message.info('请到预览页面调试路由跳转')
+            return;
+          }
           const completeRoute = window['layoutPC__basePathname'] + node.route;
           history.pushState({}, '', completeRoute);
           window.dispatchEvent(new PopStateEvent('popstate'));
@@ -91,13 +95,14 @@ export default function ({ env, data, outputs, inputs }: RuntimeParams<Data>) {
 
   /** 菜单展示数据 */
   const items = useMemo(() => {
-    if (data.menuLevel === 1 && data.menuDeep === -1) return transToItems(nestedData);
+    const canNotPushState = !env.runtime || env.runtime.debug;
+    if (data.menuLevel === 1 && data.menuDeep === -1) return transToItems(nestedData, canNotPushState);
     if (data.menuLevel === 1 && data.menuDeep === 0) {
-      return transToItems(nestedData.map((item) => ({ ...item, children: undefined })));
+      return transToItems(nestedData.map((item) => ({ ...item, children: undefined })), canNotPushState);
     }
 
     if (data.menuDeep === -1) return transToItems(showNodes);
-    else return transToItems(showNodes.map((item) => ({ ...item, children: undefined })));
+    else return transToItems(showNodes.map((item) => ({ ...item, children: undefined })), canNotPushState);
   }, [showNodes, nestedData]);
 
   return (

@@ -1,6 +1,6 @@
 {
   "name": "comlib-pc-layout",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "壳工程应用专用组件库",
   "main": "index.js",
   "scripts": {
