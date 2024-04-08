@@ -13,7 +13,6 @@ export default function ({ env }: RuntimeParams<Data>) {
   const loadApp = useCallback(() => {
     let _antd, __comlibs_rt_;
     if (pageUrl && eleRef.current) {
-      setLoading(true);
       return loadMicroApp(
         { name: pageUrl, entry: pageUrl, container: eleRef.current },
         {
@@ -24,6 +23,7 @@ export default function ({ env }: RuntimeParams<Data>) {
         },
         {
           beforeLoad() {
+            setLoading(true);
             // @ts-expect-error 用于兼容解决内网方舟页面 m-ui 挂载逻辑
             _antd = window.antd;
             // @ts-expect-error
