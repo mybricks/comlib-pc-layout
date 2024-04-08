@@ -23,7 +23,6 @@ export default function ({ env }: RuntimeParams<Data>) {
         },
         {
           beforeLoad() {
-            setLoading(true);
             // @ts-expect-error 用于兼容解决内网方舟页面 m-ui 挂载逻辑
             _antd = window.antd;
             // @ts-expect-error
@@ -35,7 +34,6 @@ export default function ({ env }: RuntimeParams<Data>) {
             return Promise.resolve();
           },
           afterMount() {
-            setLoading(false);
             // @ts-expect-error
             window.antd = _antd;
             // @ts-expect-error
