@@ -44,11 +44,11 @@ function transToItems(data: HandleRouteDataNode[], canNotPushState: boolean = fa
 }
 
 export default function ({ env, data, outputs, inputs }: RuntimeParams<Data>) {
-  if (!env.runtime || env.runtime.debug) {
-    window['layoutPC__basePathname'] = ""
-    window['layoutPC__routerParams'] = mockRouterParams;
-    window['layoutPC__userInfo'] = { nickname: 'jidan' };
-  }
+  // if (!env.runtime || env.runtime.debug) {
+  //   window['layoutPC__basePathname'] = ""
+  //   window['layoutPC__routerParams'] = mockRouterParams;
+  //   window['layoutPC__userInfo'] = { nickname: 'jidan' };
+  // }
 
   const [routerParams, setRouterParams] = useState<RouteParams>(window['layoutPC__routerParams']);
   const [showNodes, setShowNodes] = useState<HandleRouteDataNode[]>();
