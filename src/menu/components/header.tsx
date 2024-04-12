@@ -16,7 +16,7 @@ export default function Header(props: PropsType) {
   const logoEl = (
     <div style={{ width: 'fit-content', margin: 'auto', padding: '0 12px', cursor: 'pointer' }}>
       {
-        data.logoUrl ? <img height="32" src={data.logoUrl} /> : <span style={{ fontSize: 32, fontWeight: 500 }} >LOGO</span>
+        data.logoUrl ? <img height="28" src={data.logoUrl} /> : <span style={{ fontSize: 32, fontWeight: 500 }} >LOGO</span>
       }
     </div>
   );
@@ -26,7 +26,7 @@ export default function Header(props: PropsType) {
 
     const el = (
       <div style={{ width: 'fit-content', display: 'flex', gap: 12, justifyContent: 'center', alignItems: 'center', minWidth: 125 }}>
-        <img height="32" src="https://p1.a.yximgs.com/s1/i/def/head_m.png" />
+        <img height="28" src="https://p1.a.yximgs.com/s1/i/def/head_m.png" />
         <div style={{ color: '#1d1d1f', fontWeight: 500, fontSize: 14 }}>
           {isLogin ? window['layoutPC__userInfo']?.nickname : '未登录'}
         </div>
@@ -45,7 +45,7 @@ export default function Header(props: PropsType) {
   })();
 
   return (
-    <div className='mybricks-layout-menu' style={{ display: 'flex', height: 80, alignItems: 'center' }}>
+    <div className='mybricks-layout-menu' style={{ display: 'flex', height: 64, alignItems: 'center' }}>
       {data.showLogo && logoEl}
 
       <Menu style={{ width: 0, flex: 1 }} mode={data.mode} items={items} activeKey={curActiveNode?.id} />
