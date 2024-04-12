@@ -1,7 +1,10 @@
 import React, { useLayoutEffect, useMemo, useState } from 'react';
 import { Menu, message } from 'antd';
-import { Data, mockRouterParams } from './constants';
+import { mockRouterParams } from './constants';
 import dfs from '../utils/dfs';
+import './style.less';
+import { Data } from './type';
+import Header from './components/header'
 
 type RouteParam = {
   id: string;
@@ -12,7 +15,7 @@ type RouteParam = {
 };
 type RouteParams = RouteParam[];
 
-type HandleRouteDataNode = RouteParam & {
+export type HandleRouteDataNode = RouteParam & {
   dep: number;
   children?: HandleRouteDataNode[];
   parentNode?: HandleRouteDataNode;
@@ -41,10 +44,11 @@ function transToItems(data: HandleRouteDataNode[], canNotPushState: boolean = fa
 }
 
 export default function ({ env, data, outputs, inputs }: RuntimeParams<Data>) {
-  // if (!env.runtime || env.runtime.debug) {
-  //   window['layoutPC__basePathname'] = ""
-  //   window['layoutPC__routerParams'] = mockRouterParams;
-  // }
+  if (!env.runtime || env.runtime.debug) {
+    window['layoutPC__basePathname'] = ""
+    window['layoutPC__routerParams'] = mockRouterParams;
+    window['layoutPC__userInfo'] = { nickname: 'jidan' };
+  }
 
   const [routerParams, setRouterParams] = useState<RouteParams>(window['layoutPC__routerParams']);
   const [showNodes, setShowNodes] = useState<HandleRouteDataNode[]>();
@@ -105,9 +109,12 @@ export default function ({ env, data, outputs, inputs }: RuntimeParams<Data>) {
     else return transToItems(showNodes.map((item) => ({ ...item, children: undefined })), canNotPushState);
   }, [showNodes, nestedData]);
 
-  return (
-    <div>
-      <Menu mode={data.mode} items={items} activeKey={curActiveNode?.id}></Menu>
-    </div>
-  );
+
+  const isShowHeader = data.menuLevel === 1 && data.mode === 'horizontal';
+
+  if (isShowHeader) {
+    return <Header data={data} items={items} curActiveNode={curActiveNode} />
+  }
+
+  return <Menu mode={data.mode} items={items} activeKey={curActiveNode?.id}></Menu>
 }

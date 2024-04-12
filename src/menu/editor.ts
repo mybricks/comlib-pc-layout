@@ -1,5 +1,5 @@
 import { MenuProps } from 'antd';
-import { Data } from './constants';
+import { Data } from './type';
 
 export default {
   '@resize': {
@@ -45,7 +45,7 @@ export default {
         }
       },
       {
-        title: '样式',
+        title: '展示模式',
         type: 'Select',
         options: [
           { label: '水平', value: 'horizontal' },
@@ -58,6 +58,51 @@ export default {
           },
           set({ data }: EditorResult<Data>, val: MenuProps['mode']) {
             data.mode = val;
+          }
+        }
+      },
+      {
+        ifVisible({ data }: EditorResult<Data>) {
+          return data.menuLevel === 1 && data.mode === 'horizontal';
+        },
+        title: '是否展示页头Logo',
+        type: 'Switch',
+        value: {
+          get({ data }: EditorResult<Data>) {
+            return data.showLogo;
+          },
+          set({ data }: EditorResult<Data>, val: Data['showLogo']) {
+            data.showLogo = val;
+          }
+        }
+      },
+      {
+        ifVisible({ data }: EditorResult<Data>) {
+          return data.menuLevel === 1 && data.mode === 'horizontal' && data.showLogo;
+        },
+        title: '页头Logo地址',
+        type: 'text',
+        value: {
+          get({ data }: EditorResult<Data>) {
+            return data.logoUrl;
+          },
+          set({ data }: EditorResult<Data>, val: Data['logoUrl']) {
+            data.logoUrl = val;
+          }
+        }
+      },
+      {
+        ifVisible({ data }: EditorResult<Data>) {
+          return data.menuLevel === 1 && data.mode === 'horizontal';
+        },
+        title: '是否展示用户信息',
+        type: 'Switch',
+        value: {
+          get({ data }: EditorResult<Data>) {
+            return data.showUserInfo;
+          },
+          set({ data }: EditorResult<Data>, val: Data['showUserInfo']) {
+            data.showUserInfo = val;
           }
         }
       }
