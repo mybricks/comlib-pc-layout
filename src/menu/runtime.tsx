@@ -116,5 +116,5 @@ export default function ({ env, data, outputs, inputs }: RuntimeParams<Data>) {
     return <Header data={data} outputs={outputs} items={items} curActiveNode={curActiveNode} />
   }
 
-  return <Menu mode={data.mode} items={items} activeKey={curActiveNode?.id}></Menu>
+  return <Menu style={{ height: '100%' }} mode={data.mode} items={items} activeKey={curActiveNode?.id} />
 }

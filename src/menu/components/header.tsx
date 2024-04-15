@@ -59,7 +59,7 @@ export default function Header(props: PropsType) {
   })();
 
   return (
-    <div className='mybricks-layout-menu' style={{ display: 'flex', height: 64, alignItems: 'center' }}>
+    <div className='mybricks-layout-menu' style={{ display: 'flex', height: "100%", alignItems: 'center' }}>
       {data.showLogo && logoEl}
 
       <Menu style={{ width: 0, flex: 1 }} mode={data.mode} items={items} activeKey={curActiveNode?.id} />
