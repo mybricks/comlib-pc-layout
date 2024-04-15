@@ -1,16 +1,20 @@
 .mybricks-layout-menu {
   border-bottom: 1px solid #c3c3c380;
 
-  .ant-menu {
-    border: 0;
+  :global {
+    .ant-menu {
+      border: 0;
+    }
   }
 }
 
 .overlay-no-padding {
-  .ant-popover-arrow {
-    display: none;
-  }
-  .ant-popover-inner-content {
-    padding: 0;
+  :global {
+    .ant-popover-arrow {
+      display: none;
+    }
+    .ant-popover-inner-content {
+      padding: 0;
+    }
   }
 }

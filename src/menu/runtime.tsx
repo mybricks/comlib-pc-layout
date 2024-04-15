@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useMemo, useState } from 'react';
 import { Menu, message } from 'antd';
 import { mockRouterParams } from './constants';
 import dfs from '../utils/dfs';
-import './style.less';
+import css from './style.less';
 import { Data } from './type';
 import Header from './components/header'
 

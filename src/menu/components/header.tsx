@@ -5,6 +5,7 @@ import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import { HandleRouteDataNode } from '../runtime';
 import { Outputs } from '../constants';
 import useForceUpdate from '../hooks/force-update';
+import css from '../style.less';
 
 type PropsType = {
   data: Data;
@@ -52,14 +53,14 @@ export default function Header(props: PropsType) {
     return (isLogin ? <Popover
       placement="bottom"
       content={userinfoPopover}
-      overlayClassName='overlay-no-padding'
+      overlayClassName={css['overlay-no-padding']}
       overlayStyle={{ width: 125 }}
       overlayInnerStyle={{ width: 125, padding: 0 }}
     > {el} </Popover> : el)
   })();
 
   return (
-    <div className='mybricks-layout-menu' style={{ display: 'flex', height: "100%", alignItems: 'center' }}>
+    <div className={css['mybricks-layout-menu']} style={{ display: 'flex', height: "100%", alignItems: 'center' }}>
       {data.showLogo && logoEl}
 
       <Menu style={{ width: 0, flex: 1 }} mode={data.mode} items={items} activeKey={curActiveNode?.id} />
