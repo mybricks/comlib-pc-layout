@@ -36,6 +36,7 @@ interface EditorResult<T> {
 }
 
 interface UpgradeParams<T> {
+  id: string;
   data: T;
   output: any;
   input: any;
@@ -43,7 +44,32 @@ interface UpgradeParams<T> {
   style: any;
   setAutoRun: (auto?: boolean) => void;
   isAutoRun: () => boolean;
+  setDeclaredStyle: (selector: string | string[], style: React.CSSProperties, global?, withParentComId?: boolean) => void;
+  getDeclaredStyle: (selector: string) => { selector: string; css: React.CSSProperties };
+  removeDeclaredStyle: (selector: string) => void;
+  config: {
+    get: (id: string) => ConfigInstance;
+  };
+  children: any;
+  /**
+   * 注册权限信息
+   * @param options 权限相关信息
+   * @returns 注册后的权限ID
+   */
+  registerPermission: (options: { code: string; title: string }) => { id: string };
 }
+
+
+type ConfigInstance = {
+  id: string;
+  title: string;
+  schema: Record<string, any>;
+  connectionCount: number;
+  setBinding: (binding: string) => void;
+  setSchema: (schema: Record<string, any>) => void;
+  setTitle: (title: string) => void;
+  remove: () => void;
+};
 
 type AnyMap = {
   [key in string | number]: any;

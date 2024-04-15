@@ -112,3 +112,7 @@ export const mockRouterParams = [
     ]
   }
 ];
+
+export enum Outputs {
+  ICON_CLICK = 'iconClick',
+}

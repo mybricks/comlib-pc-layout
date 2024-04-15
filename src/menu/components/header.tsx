@@ -3,20 +3,24 @@ import React from 'react'
 import { Data } from '../type';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import { HandleRouteDataNode } from '../runtime';
+import { Outputs } from '../constants';
+import useForceUpdate from '../hooks/force-update';
 
 type PropsType = {
   data: Data;
+  outputs: any;
   items: ItemType[]
   curActiveNode: HandleRouteDataNode
 }
 
 export default function Header(props: PropsType) {
-  const { data, items, curActiveNode } = props;
+  const { data, outputs, items, curActiveNode } = props;
+  const forceUpdate = useForceUpdate();
 
   const logoEl = (
     <div style={{ width: 'fit-content', margin: 'auto', padding: '0 12px', cursor: 'pointer' }}>
       {
-        data.logoUrl ? <img height="28" src={data.logoUrl} /> : <span style={{ fontSize: 32, fontWeight: 500 }} >LOGO</span>
+        data.logoUrl ? <img height="28" src={data.logoUrl} onClick={() => outputs[Outputs.ICON_CLICK]()} /> : <span style={{ fontSize: 32, fontWeight: 500 }} >LOGO</span>
       }
     </div>
   );
@@ -33,7 +37,17 @@ export default function Header(props: PropsType) {
       </div>
     );
 
-    const userinfoPopover = <Button style={{ width: 125, height: 50 }} type='text' >退出登录</Button>;
+    const userinfoPopover = (
+      <Button
+        style={{ width: 125, height: 50 }}
+        type='text'
+        onClick={() => {
+          window['layoutPC__userInfo'] = undefined;
+          forceUpdate();
+        }} >
+        退出登录
+      </Button>
+    );
 
     return (isLogin ? <Popover
       placement="bottom"

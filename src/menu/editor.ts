@@ -1,5 +1,6 @@
 import { MenuProps } from 'antd';
 import { Data } from './type';
+import { Outputs } from './constants';
 
 export default {
   '@resize': {
@@ -104,6 +105,13 @@ export default {
           set({ data }: EditorResult<Data>, val: Data['showUserInfo']) {
             data.showUserInfo = val;
           }
+        }
+      },
+      {
+        title: '单击Icon',
+        type: '_Event',
+        options: {
+          outputId: Outputs.ICON_CLICK
         }
       }
     ]
