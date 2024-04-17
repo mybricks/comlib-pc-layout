@@ -5,7 +5,7 @@ import styles from './style.less';
 import { MicroApp, loadMicroApp } from 'qiankun';
 import { Spin } from 'antd';
 import dfs from '../utils/dfs';
-export default function ({ env }: RuntimeParams<Data>) {
+export default function ({ data, env }: RuntimeParams<Data>) {
   const eleRef = useRef<HTMLDivElement>(null);
   const [pageUrl, setPageUrl] = useState<string>();
   const [loading, setLoading] = useState(false);
@@ -84,7 +84,7 @@ export default function ({ env }: RuntimeParams<Data>) {
   }, [loadApp]);
 
   return (
-    <div className={styles.pageRender}>
+    <div className={styles.pageRender} style={{ ...(!!data.minHeight ? { minHeight: `calc(${data.minHeight})` } : {}) }}>
       <Spin spinning={loading} tip='加载中...'>
         {env.edit ? (
           <div className={styles.tip}>这里是页面渲染区域</div>

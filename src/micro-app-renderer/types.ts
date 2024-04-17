@@ -13,9 +13,10 @@ export type SimpleMicroApp = Compute<PartialPropsOption<
 
 export interface Data {
   pageUrl: string;
+  minHeight?: string;
 }
 
-export interface LoadableApp  {
+export interface LoadableApp {
   name: string;
   entry: string;
   container: HTMLElement
