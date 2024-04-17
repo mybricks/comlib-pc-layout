@@ -84,7 +84,7 @@ export default function ({ data, env }: RuntimeParams<Data>) {
   }, [loadApp]);
 
   return (
-    <div className={styles.pageRender} style={{ ...(!!data.minHeight ? { minHeight: `calc(${data.minHeight})` } : {}) }}>
+    <div className={styles.pageRender} style={{ ...(!!data.minHeight && !env.edit ? { minHeight: `calc(${data.minHeight})` } : {}) }}>
       <Spin spinning={loading} tip='加载中...'>
         {env.edit ? (
           <div className={styles.tip}>这里是页面渲染区域</div>
