@@ -1,0 +1,28 @@
+{
+  "title": "PC菜单页",
+  "namespace": "mybricks.layout-pc.menuPage",
+  "version": "1.0.0",
+  "description": "为页面和功能提供导航的菜单页",
+  "author": "jidan.wd",
+  "author_name": "jidan.wd",
+  "icon": "./icon.svg",
+  "data": "./data.json",
+  "runtime": "./runtime.tsx",
+  "editors": "./editor.ts",
+  "slots": [
+    {
+      "id": "body",
+      "title": "内容"
+    }
+  ],
+  "outputs": [
+    {
+      "id": "iconClick",
+      "title": "单击Icon",
+      "schema": {
+        "type": "any"
+      }
+    }
+  ],
+  "inputs": []
+}
