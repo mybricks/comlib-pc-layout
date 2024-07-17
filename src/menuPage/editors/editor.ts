@@ -41,6 +41,30 @@ export default {
             data.showSideMenu = val;
           }
         }
+      },
+      {
+        title: '路由',
+        type: 'text',
+        value: {
+          get({ data }: EditorResult<Data>) {
+            return data.router;
+          },
+          set({ data }: EditorResult<Data>, val: string) {
+            data.router = val;
+          }
+        }
+      },
+      {
+        title: '子应用URL',
+        type: 'text',
+        value: {
+          get({ data }: EditorResult<Data>) {
+            return data.url;
+          },
+          set({ data }: EditorResult<Data>, val: string) {
+            data.url = val;
+          }
+        }
       }
     ]
   },

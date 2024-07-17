@@ -68,7 +68,7 @@ export default function SideMenu(props) {
   //菜单点击事件
   const onClick = (e) => {
     //const clickItem = findMenuItem(dataSource, e.key);
-    setSelectedKey([e.key]);
+    //setSelectedKey([e.key]);
   };
 
  return (
@@ -84,9 +84,10 @@ export default function SideMenu(props) {
       </Menu>
     </div>
     <div style={{width: '100%'}}>
-      {slots[selectedKey[0]]?.render({
+      {/* {slots[selectedKey[0]]?.render({
         key: selectedKey[0]
-      })}
+      })} */}
+      {slots["page"]?.render()}
     </div>
   </div>
  )

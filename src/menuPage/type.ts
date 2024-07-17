@@ -17,6 +17,8 @@ export interface MenuItem {
 }
 
 export interface Data {
+  router: string;
+  url: string;
   /** 是否展示顶部菜单 */
   showTopMenu: boolean;
   /** 是否展示侧边菜单 */

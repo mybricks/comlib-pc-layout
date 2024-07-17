@@ -13,6 +13,10 @@
     {
       "id": "menu1",
       "title": "菜单1"
+    },
+    {
+      "id": "page",
+      "title": "子应用页面"
     }
   ],
   "outputs": [

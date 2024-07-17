@@ -1,7 +1,5 @@
 {
-  "menuLevel": 1,
-  "menuDeep": -1,
-  "mode": "horizontal",
+  "router": "/pages/main/index",
   "showTopMenu": false,
   "showSideMenu": true,
   "dataSource": [

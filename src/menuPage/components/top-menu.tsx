@@ -7,8 +7,6 @@ import css from '../style.less'
 export default function TopMenu(props) {
   const { slots, env, dataSource, logo, logoSize, src, showLogo, showAvatar, showMenu } = props;
 
-  console.log('logoSize1234', logoSize);
-
   const [selectedKey, setSelectedKey] = useState<string[]>([]);
 
   useEffect(() => {
