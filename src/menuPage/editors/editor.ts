@@ -264,6 +264,87 @@ export default {
       ];
     }
   },
+  '[data-logo]'({ data }, cate1) {
+    cate1.title = 'Logo配置';
+    cate1.items = [
+      {
+        type: 'imageSelector',
+        value: {
+          get({ data }) {
+            return data.logo
+          },
+          set({ data }, url: string) {
+            data.logo = url;
+          }
+        }
+      },
+      {
+        title: '尺寸',
+        type: 'InputNumber',
+        options: [
+          { title: '高度', min: 0, width: 100 },
+          { title: '宽度', min: 0, width: 100 }
+        ],
+        value: {
+          get({ data }) {
+            return data.logoSize || [86, 32];
+          },
+          set({ data }, value: [number, number]) {
+            data.logoSize = value;
+          }
+        }
+      },
+    ]
+  },
+  '[data-title]'({ data }, cate1) {
+    cate1.title = '应用标题配置';
+    cate1.items = [
+      {
+        title: '标题',
+        type: 'Text',
+        value: {
+          get({ data }) {
+            return data.title
+          },
+          set({ data }, url: string) {
+            data.title = url;
+          }
+        }
+      }
+    ]
+  },
+  '[data-avatar]'({ data }, cate1) {
+    cate1.title = '用户头像配置';
+    cate1.items = [
+      {
+        type: 'imageSelector',
+        value: {
+          get({ data }) {
+            return data.avatar
+          },
+          set({ data }, url: string) {
+            data.avatar = url;
+          }
+        }
+      },
+    ]
+  },
+  '[data-user-name]'({ data }, cate1) {
+    cate1.title = '用户名';
+    cate1.items = [
+      {
+        type: 'Text',
+        value: {
+          get({ data }) {
+            return data.userName
+          },
+          set({ data }, val: string) {
+            data.userName = val;
+          }
+        }
+      },
+    ]
+  },
   '[data-top-menu-item]': {
     title: '顶部菜单项',
     items: (props: EditorResult<Data>, cate1, cate2) => {

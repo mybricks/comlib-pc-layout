@@ -32,10 +32,12 @@ export default function ({ env, _env, data, slots, outputs, inputs, logger, styl
             env={env}
             logo={data.logo}
             logoSize={data.logoSize}
-            src={data.src}
+            avatar={data.avatar}
+            userName={data.userName}
             showLogo={data.showLogo}
             showMenu={data.showMenu}
             showAvatar={data.showAvatar}
+            title={data.title}
           /> 
         : void 0}
       </div>

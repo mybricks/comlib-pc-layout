@@ -5,7 +5,7 @@ import { findSelectkeys, findMenuItem } from '../utils';
 import css from '../style.less'
 
 export default function TopMenu(props) {
-  const { slots, env, dataSource, logo, logoSize, src, showLogo, showAvatar, showMenu } = props;
+  const { slots, env, dataSource, logo, logoSize, avatar, showLogo, showAvatar, showMenu, title, userName } = props;
 
   const [selectedKey, setSelectedKey] = useState<string[]>([]);
 
@@ -76,14 +76,22 @@ export default function TopMenu(props) {
 
  return (
   <div data-top-menu>
-    <div style={{display: 'flex', flexWrap: 'nowrap', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "#333", height: '80px', alignItems: 'center'}} >
-        {
-          showLogo ? <img 
-            data-logo
-            src = {logo}
-            style={{height: logoSize[0], width: logoSize[1] }}
-          /> : void 0
-        }
+    <div style={{display: 'flex', flexWrap: 'nowrap', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "#fff", height: '64px', alignItems: 'center'}} >
+        <div style={{display: 'flex', alignItems: 'center'}}>
+          {
+            showLogo ? <img 
+              data-logo
+              src = {logo}
+              style={{height: logoSize[0], width: logoSize[1] }}
+            /> : void 0
+          }
+          <h1 
+            data-title
+            className={css.title}
+          >
+            {title}
+          </h1>
+        </div>
         {
           showMenu ? <div
             data-top-menu-list
@@ -108,18 +116,29 @@ export default function TopMenu(props) {
           </div> : void 0
         }
         {
-          showAvatar ? <Popover 
-          trigger={env.runtime ? 'hover' : 'click'} 
-          // title={popoverTitle} 
-          // placement='bottomRight' 
-          // content={popoverContent}
-          >
-            <img 
-              data-popover-img 
-              src={src}
-              style={{height: 60, width: 60 }} 
-            />
-          </Popover> : void 0
+          showAvatar ?
+          <div style={{display: 'flex', alignItems: 'center', marginRight: '8px'}}>
+             <Popover 
+              trigger={env.runtime ? 'hover' : 'click'} 
+            >
+              <div className={css.avatar}>
+                <img 
+                  data-avatar
+                  data-popover-img 
+                  src={avatar}
+                  style={{height: '100%', width: '100%', borderRadius: '50%' }} 
+                />
+              </div>
+            </Popover> 
+            <div 
+              data-user-name
+              style={{marginLeft: '8px', fontSize: '14px', color: 'rgba(0, 0, 0, 0.45)'}}
+            >
+              {userName}
+            </div>
+          </div> 
+
+          : void 0
         }
     </div>
     {/* <div style={{width: '100%'}}>

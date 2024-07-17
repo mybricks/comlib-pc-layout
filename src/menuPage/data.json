@@ -1,6 +1,6 @@
 {
   "router": "/pages/main/index",
-  "showTopMenu": false,
+  "showTopMenu": true,
   "showSideMenu": true,
   "dataSource": [
     {
@@ -22,8 +22,10 @@
   ],
   "showLogo": true,
   "logo": "https://assets.mybricks.world/files/534065092341829/eIlA1FcZDrjot9zb2A6lwRgoYmQp7ufy-1708308478484.png",
-  "showMenu": true,
+  "title": "MyBricks",
+  "showMenu": false,
   "logoSize": [60, 60],
   "showAvatar": true,
-  "src": "https://cdn.pixabay.com/photo/2013/05/12/18/55/balance-110850__480.jpg"
+  "avatar": "https://cdn.pixabay.com/photo/2013/05/12/18/55/balance-110850__480.jpg",
+  "userName": "Mr.MyBricks"
 }

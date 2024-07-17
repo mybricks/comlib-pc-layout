@@ -31,10 +31,12 @@ export interface Data {
   /** 顶部菜单 */
   topDataSource: MenuItem[];
   logo: string;
+  title:string;
   logoSize: number[]
   leftMenus: any[]
-  src: string;
+  avatar: string;
   showLogo: boolean;
   showMenu: boolean;
   showAvatar: boolean;
+  userName: string;
 }
