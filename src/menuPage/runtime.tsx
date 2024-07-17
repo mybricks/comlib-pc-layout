@@ -1,5 +1,5 @@
-import React, { useLayoutEffect, useMemo, useState } from 'react';
-import { message } from 'antd';
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { message, Menu } from 'antd';
 import type { MenuProps } from 'antd';
 import TopMenu from './components/top-menu';
 import SideMenu from './components/side-menu';
@@ -22,20 +22,34 @@ export default function ({ env, _env, data, slots, outputs, inputs, logger, styl
     }
   ];
 
- return (
-  <div>
-    {data.showTopMenu ?
-      <TopMenu/> 
-    : void 0}
-    {data.showSideMenu ? 
-      <SideMenu
-      items={items}
-      slots={slots}
-      />   
-    :void 0}
-    {slots['body'].render({
-        style: { overflow: 'auto' }
-    })}
-  </div>
- )
+  return (
+    <div style={{display: 'flex', flexDirection:'column', height: '100%'}}>
+      <div>
+        {data.showTopMenu ?
+          <TopMenu
+            dataSource={data.topDataSource}
+            slots={slots}
+            env={env}
+            logo={data.logo}
+            logoSize={data.logoSize}
+            src={data.src}
+            showLogo={data.showLogo}
+            showMenu={data.showMenu}
+            showAvatar={data.showAvatar}
+          /> 
+        : void 0}
+      </div>
+      <div style={{flex: 1}}> 
+        {data.showSideMenu ? 
+          <SideMenu
+            dataSource={data.dataSource}
+            slots={slots}
+            env={env}
+            sideMenuWidth={data.sideMenuWidth}
+          />   
+        :void 0}
+      </div>
+      
+    </div>
+  )
 }

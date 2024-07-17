@@ -1,20 +1,38 @@
-import { MenuProps } from 'antd';
+export enum MenuTypeEnum {
+  Menu = 'menu',
+  SubMenu = 'subMenu',
+  Group = 'group'
+}
+export interface MenuItem {
+  _key: string;
+  key: string;
+  title: string;
+  value?: any;
+  menuType?: MenuTypeEnum;
+  children: MenuItem[];
+  defaultActive?: boolean;
+  [key: string]: any;
+  useIcon?: boolean;
+  icon?: string;
+}
 
 export interface Data {
   /** 是否展示顶部菜单 */
   showTopMenu: boolean;
   /** 是否展示侧边菜单 */
   showSideMenu: boolean;
-  // /** 展示第几级菜单，1-5级 */
-  // menuLevel: number;
-  // /** 展示菜单的深度，-1全展示，0只展示当前级 */
-  // menuDeep: number;
-  // mode: MenuProps['mode'];
+  dataSource: MenuItem[];
 
-  // /** 是否展示logo */
-  // showLogo: boolean;
-  // /** logo地址 */
-  // logoUrl: string
-  // /** 是否展示用户信息 */
-  // showUserInfo: boolean;
+  sideMenuWidth: string;
+  
+  
+  /** 顶部菜单 */
+  topDataSource: MenuItem[];
+  logo: string;
+  logoSize: number[]
+  leftMenus: any[]
+  src: string;
+  showLogo: boolean;
+  showMenu: boolean;
+  showAvatar: boolean;
 }
